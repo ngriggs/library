@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Library Application</title>
+<link rel='stylesheet' href='style.css'>
+</head>
+<body>
+    <button class='newBook'>Add a Book</button>
+    <div class="form-popup" id="myForm">
+        <form class="form-container">
+          <h1>Add a Book</h1>
+      
+          <label for="title"><b>Title</b></label>
+          <input type="text" placeholder="Book Title" name="title" required>
+      
+          <label for="author"><b>Author</b></label>
+          <input type="text" placeholder="Author's name" name="author" required>
+          
+          <label for="pages"><b>Number of Pages</b></label>
+          <input type="number" placeholder="Pages" name="pages">
+
+          <label for="read"><b>Have you read this book?</b></label>
+          <input type="radio" name="affirmative" value='yes' checked>
+          <input type="radio" name="negative" value='no'>
+          
+          <button type="submit" class="btn">Submit</button>
+          <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div> 
+    <div class='container'>
+    <div class='gridContainer'>
+
+    </div>
+
+</div>
+</body>
+<script src='script.js'></script>
+</html> 
