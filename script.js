@@ -4,13 +4,7 @@ const gridContainer = document.querySelector('.gridContainer');
 
 const newBookButton = document.querySelector('.newBook');
 
-const submitButton = document.querySelector('.btn');
-
-
-
-newBookButton.addEventListener("click", openForm);
-
-
+newBookButton.addEventListener("click", createForm);
 
 function newBook() {
     const form = document.forms[0];
@@ -20,8 +14,7 @@ function newBook() {
         let text = new book(title.value, author.value, pages.value, read.value);
         addBookToLibrary(text, myLibrary)
         displayBooks(myLibrary)
-      });
-
+    });
 }
 
 function book(title, author, ...args) {
@@ -52,6 +45,7 @@ function displayBooks(myLibrary) {
         removeButton.setAttribute('class', 'removeButton')
         removeButton.setAttribute('id', i);
         removeButton.innerHTML = 'Remove'
+        removeButton.addEventListener('click', removeBookFromLibrary)
         bookDiv.classList.add('bookCard');
         bookDiv.innerHTML += '<h3>'+ myLibrary[i].title+'</h3>';
         bookDiv.innerHTML += '<p>'+ myLibrary[i].author+'</p>';
@@ -62,22 +56,87 @@ function displayBooks(myLibrary) {
 
 };
 
-function removeBookFromLibrary(index) {
-    myLibrary.splice(index, 1)
-    console.log(myLibrary)
+function createForm() {
+    let formPopup = document.querySelector('.form-popup')
+    let formObj = document.createElement('form')
+    formObj.setAttribute('class', 'form-container')
+    formObj.innerHTML = '<h1>Add a Book</h1>'
+    formPopup.appendChild(formObj)
+
+    let titleLabel = document.createElement('label')
+    let titleInput = document.createElement('input')
+    titleLabel.innerHTML = '<b>Title</b>'
+    titleInput.setAttribute('type', 'text')
+    titleInput.setAttribute('placeholder', 'Book Title')
+    titleInput.setAttribute('name', 'title')
+    titleInput.required = true
+
+    let authorLabel = document.createElement('label')
+    let authorInput = document.createElement('input')
+    authorLabel.innerHTML = '<b>Author</b>'
+    authorInput.setAttribute('type', 'text')
+    authorInput.setAttribute('placeholder', 'Author\'s name')
+    authorInput.setAttribute('name', 'author')
+    authorInput.required = true
+
+    let pagesLabel = document.createElement('label')
+    let pagesInput = document.createElement('input')
+    pagesLabel.innerHTML = '<b>Number of pages</b>'
+    pagesInput.setAttribute('type', 'number')
+    pagesInput.setAttribute('placeholder', 'Pages')
+    pagesInput.setAttribute('name', 'pages')
+
+    let readLabel = document.createElement('label')
+    let readInputYes = document.createElement('input')
+    let readLabelYes = document.createElement('label')
+    let readInputNo = document.createElement('input')
+    let readLabelNo = document.createElement('label')
+
+    readLabel.innerHTML = '<b>Have you read this book?</b>'
+    readInputYes.setAttribute('type', 'radio')
+    readInputYes.setAttribute('name', 'read')
+    readInputYes.checked = true
+    readLabelYes.innerHTML = 'Yes'
+    readInputNo.setAttribute('type', 'radio')
+    readInputNo.setAttribute('name', 'read')
+    readLabelNo.innerHTML = 'No'
+    
+    let submitButton = document.createElement('button')
+    let cancelButton = document.createElement('button')
+
+    submitButton.setAttribute('class', 'btn')
+    cancelButton.setAttribute('class', 'btn cancel')
+    submitButton.innerHTML = 'Submit'
+    cancelButton.innerHTML = 'Close'
+    cancelButton.addEventListener('click', removeForm)
+
+    formObj.appendChild(titleLabel)
+    formObj.appendChild(titleInput)
+    formObj.appendChild(authorLabel)
+    formObj.appendChild(authorInput)
+    formObj.appendChild(pagesLabel)
+    formObj.appendChild(pagesInput)
+    formObj.appendChild(readLabel)
+    formObj.appendChild(readInputYes)
+    formObj.appendChild(readLabelYes)
+    formObj.appendChild(readInputNo)
+    formObj.appendChild(readLabelNo)
+    formObj.appendChild(submitButton)
+    formObj.appendChild(cancelButton)
+    newBook()
+
+}
+
+
+function removeForm() {
+    var node = document.querySelector('.form-popup');
+    node.querySelectorAll('*').forEach(n => n.remove());
+}
+
+
+function removeBookFromLibrary() {
+    let index = this.getAttribute('id')
+    myLibrary.splice(parseInt(index), 1)
     displayBooks(myLibrary)
 }
-
-function openForm() {
-    document.getElementById("myForm").style.display = "block";
-    newBook()
-}
-
-function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-} 
-
-
-const removeBtn = document.getElementsByClassName('removeButton')
-removeBtn.addEventListener('click', removeBookFromLibrary(0))
 
