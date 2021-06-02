@@ -140,3 +140,37 @@ function removeBookFromLibrary() {
     displayBooks(myLibrary)
 }
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// let firebaseConfig = {
+// apiKey: "",
+// authDomain: "",
+// projectId: "",
+// storageBucket: "",
+// messagingSenderId: "",
+// appId: "",
+// measurementId: "",
+// databaseURL: ''
+// };
+
+// firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
+// let database = firebase.database();
+
+
+// function saveDataToCloudStorage() {
+//     let user = firebase.auth().currentUser;
+//     if (user) {
+//       let dataJson = JSON.stringify({ myLibrary, uniqueId });
+//       database.ref('users/' + user.uid).set(dataJson);
+//     }
+//   }
+  
+//   function loadDataFromCloudStorage(isRewrite) {
+//     let user = firebase.auth().currentUser;
+//     if (user) {
+//       database.ref('users/' + user.uid).once('value', (snap) => {
+//         changeLibraryToDB(snap.val(), isRewrite);
+//       });
+//     }
+//   }

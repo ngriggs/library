@@ -1,0 +1,23 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngriggs/library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngriggs/library/issues"
+  },
+  "homepage": "https://github.com/ngriggs/library#readme",
+  "dependencies": {
+    "firebase": "^8.6.3",
+    "firebaseui": "^4.8.0"
+  }
+}
