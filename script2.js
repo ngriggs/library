@@ -10,20 +10,19 @@ class Book {
         this.myLibrary = []
     }
 
-    addBookToLibrary(book, myLibrary) {
+    addBookToLibrary(book) {
         this.myLibrary.push(book);
-        console.log(myLibrary)
     };
 
     newBook() {
-        const $this = this;
+        const that = this;
         const form = document.forms[0];
         form.addEventListener("submit", function(event) {
             event.preventDefault();
             const { title, author, pages, read } = this.elements;
             let text = new Book(title.value, author.value, pages.value, read.value);
-            $this.addBookToLibrary(text, $this.myLibrary)
-            $this.displayBooks($this.myLibrary)
+            that.addBookToLibrary(text)
+            that.displayBooks(that.myLibrary)
         });
     }
     emptyDisplay() {
@@ -31,7 +30,8 @@ class Book {
         node.querySelectorAll('*').forEach(n => n.remove());
     }
     displayBooks(myLibrary) {
-        this.emptyDisplay()
+        const that = this
+        that.emptyDisplay()
         const gridContainer = document.querySelector('.gridContainer');
         for (let i=0; i < myLibrary.length; i++) {
             const bookDiv = document.createElement('div');
@@ -39,7 +39,11 @@ class Book {
             removeButton.setAttribute('class', 'removeButton')
             removeButton.setAttribute('id', i);
             removeButton.innerHTML = 'Remove'
-            removeButton.addEventListener('click', this.removeBookFromLibrary)
+            removeButton.addEventListener('click', () => {
+                let index = removeButton.getAttribute('id')
+                myLibrary.splice(parseInt(index), 1)
+                that.displayBooks(myLibrary)
+            })
             bookDiv.classList.add('bookCard');
             bookDiv.innerHTML += '<h3>'+ myLibrary[i].title+'</h3>';
             bookDiv.innerHTML += '<p>'+ myLibrary[i].author+'</p>';
@@ -50,8 +54,12 @@ class Book {
     
     };
     createForm() {
+        const that = this
         let formPopup = document.querySelector('.form-popup')
         let formObj = document.createElement('form')
+        if (formPopup.innerHTML != "") {
+            return
+        }
         formObj.setAttribute('class', 'form-container')
         formObj.innerHTML = '<h1>Add a Book</h1>'
         formPopup.appendChild(formObj)
@@ -101,7 +109,7 @@ class Book {
         cancelButton.setAttribute('class', 'btn cancel')
         submitButton.innerHTML = 'Submit'
         cancelButton.innerHTML = 'Close'
-        cancelButton.addEventListener('click', this.removeForm)
+        cancelButton.addEventListener('click', that.removeForm)
     
         formObj.appendChild(titleLabel)
         formObj.appendChild(titleInput)
@@ -116,24 +124,16 @@ class Book {
         formObj.appendChild(readLabelNo)
         formObj.appendChild(submitButton)
         formObj.appendChild(cancelButton)
-        this.newBook()
+        that.newBook()
     
     }
     removeForm() {
         var node = document.querySelector('.form-popup');
         node.querySelectorAll('*').forEach(n => n.remove());
     }
-    removeBookFromLibrary() {
-        let index = this.getAttribute('id')
-        console.log(index)
-        console.log(this.myLibrary)
-        console.log(myLibrary)
-        myLibrary.splice(parseInt(index), 1)
-        $this.displayBooks($this.myLibrary)
-    }
     
     
-}
+};
 let book1 = new Book('The Hobbit', 'JRR Tolkien', 55)
 newBookButton = document.querySelector('.newBook');
-newBookButton.addEventListener("click", book1.createForm());
+newBookButton.addEventListener("click", book1.createForm.bind(book1));
